@@ -25,13 +25,14 @@ export async function registrationHandler(request: FastifyRequest, reply: Fastif
 
   // Получаем доступ к базе данных через fastify.sqlite
   // const db = request.server.sqlite
-  const db = (request.server as any).sqlite
+  const db = (request.server as any).sqlite_users
 
 
   try {
     // Сохраняем нового пользователя в таблицу
     const stmt = db.prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)')
     stmt.run(name, email, hashedPassword)
+    // call function wich will create new row in table users_ratings, connected to user_id
     return reply.code(201).send({ message: 'User registered successfully' })
   } catch (err: any) {
     // Например, пользователь с таким email уже есть
