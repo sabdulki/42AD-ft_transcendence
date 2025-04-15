@@ -29,6 +29,8 @@ async function main() {
     }
     console.log("Server listening at " + address)
   })
+  // console.dir(app, { depth: null })
+
 }
 
 main()

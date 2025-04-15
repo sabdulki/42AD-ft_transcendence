@@ -1,6 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { Storage } from '../../../infrastructure/storage/storage'
 import bcrypt from 'bcryptjs'
+// import '../../../typos/fastify' // 👈 Добавь это временно
+
 
 interface RegisterBody {
   name: string
@@ -22,13 +24,14 @@ export async function registrationHandler(request: FastifyRequest, reply: Fastif
   const hashedPassword = bcrypt.hashSync(password, 10)
 
   // Получаем доступ к базе данных через fastify.sqlite
-  const db = request.server.sqlite
+  // const db = request.server.sqlite
+  const db = (request.server as any).sqlite
+
 
   try {
     // Сохраняем нового пользователя в таблицу
     const stmt = db.prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)')
     stmt.run(name, email, hashedPassword)
-
     return reply.code(201).send({ message: 'User registered successfully' })
   } catch (err: any) {
     // Например, пользователь с таким email уже есть

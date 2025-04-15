@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { IHandler } from '../../pkg/handler/handler'
 import { pingHandler } from './handlers/ping'
 import { registrationHandler } from './handlers/registration'
+import { loginHandler } from './handlers/login'
 
 const routes: IHandler[] = [
   {
@@ -13,6 +14,11 @@ const routes: IHandler[] = [
     method: 'POST',
     route: '/auth/api/rest/registration',
     handler: registrationHandler
+  },
+  {
+    method: 'POST',
+    route: '/auth/api/rest/login',
+    handler: loginHandler
   }
 ]
 
