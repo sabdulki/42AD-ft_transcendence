@@ -6,11 +6,10 @@ const app = Fastify()
 
 async function main() {
   // 1. Подключаемся к SQLite
-  const users_db = sqlite3('./users_database.db')
-  const ratings_db = sqlite3('./ratings_database.db')
+  const db = sqlite3('./databases.db')
 
   // 2. Создаем таблицу, если не существует
-  users_db.exec(`
+  db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT UNIQUE,
@@ -18,7 +17,7 @@ async function main() {
       password TEXT
     )
   `)
-  ratings_db.exec(`
+  db.exec(`
     CREATE TABLE IF NOT EXISTS ratings (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id BIGINT NOT NULL,
@@ -27,8 +26,7 @@ async function main() {
     )
   `)
   // 3. Передаем базу в Fastify (так ты сможешь её использовать в роутерах)
-  app.decorate('sqlite_users', users_db)
-  app.decorate('sqlite_users', ratings_db)
+  app.decorate('sqlite', db)
   await registerRestRoutes(app)
 
   app.listen({ port: 3000 }, (err, address) => {
@@ -38,8 +36,6 @@ async function main() {
     }
     console.log("Server listening at " + address)
   })
-  // console.dir(app, { depth: null })
-
 }
 
 main()

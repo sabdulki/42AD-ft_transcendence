@@ -16,7 +16,7 @@ export async function loginHandler(request: FastifyRequest, reply: FastifyReply)
 	return reply.code(400).send({ error: 'Missing name or password' })
   }
 
-  const db = (request.server as any).sqlite_users
+  const db = (request.server as any).sqlite
   // Найдём пользователя по username
   const user = db.prepare('SELECT * FROM users WHERE username = ?').get(name)
 
