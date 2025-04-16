@@ -6,7 +6,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node src/app.ts",
     "build": "tsc -p tsconfig.json"
-
   },
   "keywords": [],
   "author": "",
@@ -14,7 +13,9 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^11.9.1",
     "fastify": "^5.3.0",
+    "fastify-plugin": "^5.0.1",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

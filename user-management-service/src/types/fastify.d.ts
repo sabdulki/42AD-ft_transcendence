@@ -3,7 +3,9 @@ import Database from 'better-sqlite3'
 
 declare module 'fastify' {
   interface FastifyInstance {
-    sqlite_users: Database
-    sqlite_ratings: Database
+    sqlite: Database
+  }
+  interface FastifyRequest {
+    server: FastifyInstance // Make sure this is declared
   }
 }
